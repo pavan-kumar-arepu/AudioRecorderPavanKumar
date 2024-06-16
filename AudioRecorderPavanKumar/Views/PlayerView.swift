@@ -10,10 +10,22 @@ import SwiftUI
 import AVFoundation
 import SwiftUI
 
+/// SwiftUI view for playing audio with playback controls and renaming option.
+///
+/// This view displays an image indicating playback, the name of the audio file being played,
+/// playback controls (play/pause), and a button to trigger renaming of the audio file.
+///
+/// - Author: Arepu Pavan Kumar
+/// 
 struct PlayerView: View {
     @ObservedObject private var viewModel: PlayerViewModel
     var renameAction: () -> Void // Closure to trigger rename action
     
+    /// Initializes the PlayerView with an audio URL and a closure to trigger renaming.
+    ///
+    /// - Parameters:
+    ///   - audioURL: The URL of the audio file to be played.
+    ///   - renameAction: A closure to be executed when the rename button is tapped.
     init(audioURL: URL, renameAction: @escaping () -> Void) {
         _viewModel = ObservedObject(wrappedValue: PlayerViewModel(audioURL: audioURL))
         self.renameAction = renameAction
@@ -23,12 +35,14 @@ struct PlayerView: View {
         VStack {
             Spacer()
             
+            // Image indicating audio playback
             Image("playing")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 175, height: 175) // Adjust size as needed
                 .padding()
             
+            // Display the name of the audio file being played
             if let audioURL = viewModel.audioURL {
                 Text(audioURL.lastPathComponent)
                     .font(.headline)
@@ -37,6 +51,7 @@ struct PlayerView: View {
             
             Spacer()
             
+            // Playback controls (Play/Pause)
             HStack {
                 if viewModel.isPlaying {
                     Button(action: {
@@ -66,6 +81,7 @@ struct PlayerView: View {
                     }
                 }
                 
+                // Button to trigger renaming of the audio file
                 Button(action: {
                     renameAction() // Trigger rename action
                 }) {
@@ -81,7 +97,7 @@ struct PlayerView: View {
             }
             .padding()
         }
-        .navigationTitle("Player")
+        .navigationTitle("Player") // Navigation title for PlayerView
     }
 }
 
