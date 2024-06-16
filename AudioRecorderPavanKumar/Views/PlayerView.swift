@@ -21,6 +21,8 @@ struct PlayerView: View {
     
     var body: some View {
         VStack {
+            Spacer()
+            
             Image("playing")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
