@@ -31,6 +31,7 @@
 		0B52C2AF2C1F1AA4006474C7 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		0B52C2B12C1F1BF7006474C7 /* RecordingListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingListViewModel.swift; sourceTree = "<group>"; };
 		0B52C2B32C1F1FC4006474C7 /* PlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewModel.swift; sourceTree = "<group>"; };
+		0B52C2B52C1F26C9006474C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +64,7 @@
 		0B52C2952C1F085C006474C7 /* AudioRecorderPavanKumar */ = {
 			isa = PBXGroup;
 			children = (
+				0B52C2B52C1F26C9006474C7 /* Info.plist */,
 				0B52C2A82C1F0FFC006474C7 /* Utilities */,
 				0B52C2A72C1F0FF7006474C7 /* Services */,
 				0B52C2A62C1F0FF1006474C7 /* ViewModels */,
@@ -334,6 +336,9 @@
 				DEVELOPMENT_TEAM = D2KUN44K2A;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AudioRecorderPavanKumar/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Would like to use system Microphone for recording";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -363,6 +368,9 @@
 				DEVELOPMENT_TEAM = D2KUN44K2A;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AudioRecorderPavanKumar/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Would like to use system Microphone for recording";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
