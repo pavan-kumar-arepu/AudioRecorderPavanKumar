@@ -41,11 +41,44 @@ class RecorderViewModel: NSObject, ObservableObject {
     
     // MARK: - Recording Actions
 
+    /*
     func startRecording() {
         let audioSession = AVAudioSession.sharedInstance()
         
         do {
             try audioSession.setCategory(.record, mode: .default)
+            try audioSession.setActive(true)
+            
+            let audioSettings: [String: Any] = [
+                AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+                AVSampleRateKey: 44100.0,
+                AVNumberOfChannelsKey: 2,
+                AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
+            ]
+            
+            let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyyMMddHHmmss"
+            let timestamp = dateFormatter.string(from: Date())
+            let audioFileURL = documentsPath.appendingPathComponent("recording_\(timestamp).m4a")
+            
+            audioRecorder = try AVAudioRecorder(url: audioFileURL, settings: audioSettings)
+            audioRecorder?.delegate = self
+            audioRecorder?.record()
+            recordingState = .recording
+            
+            startTimer()
+        } catch {
+            print("Error starting recording: \(error.localizedDescription)")
+        }
+    }
+     */
+    func startRecording() {
+        let audioSession = AVAudioSession.sharedInstance()
+        
+        do {
+            // Enabled background capability
+            try audioSession.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker, .allowBluetooth, .allowAirPlay, .mixWithOthers])
             try audioSession.setActive(true)
             
             let audioSettings: [String: Any] = [
