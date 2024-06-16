@@ -34,45 +34,14 @@ class RecorderViewModel: NSObject, ObservableObject {
     }
     
     var recordingDurationFormatted: String {
-        let minutes = Int(recordingDuration) / 60
-        let seconds = Int(recordingDuration) % 60
-        return String(format: "%02d:%02d", minutes, seconds)
-    }
+         let hours = Int(recordingDuration) / 3600
+         let minutes = (Int(recordingDuration) % 3600) / 60
+         let seconds = Int(recordingDuration) % 60
+         return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
+     }
     
     // MARK: - Recording Actions
 
-    /*
-    func startRecording() {
-        let audioSession = AVAudioSession.sharedInstance()
-        
-        do {
-            try audioSession.setCategory(.record, mode: .default)
-            try audioSession.setActive(true)
-            
-            let audioSettings: [String: Any] = [
-                AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
-                AVSampleRateKey: 44100.0,
-                AVNumberOfChannelsKey: 2,
-                AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
-            ]
-            
-            let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyyMMddHHmmss"
-            let timestamp = dateFormatter.string(from: Date())
-            let audioFileURL = documentsPath.appendingPathComponent("recording_\(timestamp).m4a")
-            
-            audioRecorder = try AVAudioRecorder(url: audioFileURL, settings: audioSettings)
-            audioRecorder?.delegate = self
-            audioRecorder?.record()
-            recordingState = .recording
-            
-            startTimer()
-        } catch {
-            print("Error starting recording: \(error.localizedDescription)")
-        }
-    }
-     */
     func startRecording() {
         let audioSession = AVAudioSession.sharedInstance()
         
@@ -126,12 +95,16 @@ class RecorderViewModel: NSObject, ObservableObject {
         onRecordingFinished?()
     }
     
+    // Modified the timer to check if the recording duration has reached 4 hours (14,400 seconds) and stop the recording if so.
     private func startTimer() {
-        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
-            guard let self = self else { return }
-            self.recordingDuration += 1.0
-        }
-    }
+          timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+              guard let self = self else { return }
+              self.recordingDuration += 1.0
+              if self.recordingDuration >= 14400 { // 4 hours in seconds
+                  self.stopRecording()
+              }
+          }
+      }
     
     private func saveRecording() {
         guard let audioRecorder = audioRecorder else { return }
