@@ -17,7 +17,7 @@ import Foundation
 import AVFoundation
 
 class RecorderViewModel: NSObject, ObservableObject {
-    enum RecordingState {
+    enum RecordingState: String {
         case idle, recording, paused
     }
     
@@ -31,14 +31,17 @@ class RecorderViewModel: NSObject, ObservableObject {
     
     override init() {
         super.init()
+        loadRecordingState()
+        NotificationCenter.default.addObserver(self, selector: #selector(stopRecording), name: Notification.Name("stopRecording"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(saveRecordingState), name: Notification.Name("saveRecordingState"), object: nil)
     }
     
     var recordingDurationFormatted: String {
-         let hours = Int(recordingDuration) / 3600
-         let minutes = (Int(recordingDuration) % 3600) / 60
-         let seconds = Int(recordingDuration) % 60
-         return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
-     }
+        let hours = Int(recordingDuration) / 3600
+        let minutes = (Int(recordingDuration) % 3600) / 60
+        let seconds = Int(recordingDuration) % 60
+        return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
+    }
     
     // MARK: - Recording Actions
 
@@ -46,7 +49,6 @@ class RecorderViewModel: NSObject, ObservableObject {
         let audioSession = AVAudioSession.sharedInstance()
         
         do {
-            // Enabled background capability
             try audioSession.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker, .allowBluetooth, .allowAirPlay, .mixWithOthers])
             try audioSession.setActive(true)
             
@@ -69,6 +71,7 @@ class RecorderViewModel: NSObject, ObservableObject {
             recordingState = .recording
             
             startTimer()
+            saveRecordingState()
         } catch {
             print("Error starting recording: \(error.localizedDescription)")
         }
@@ -78,33 +81,36 @@ class RecorderViewModel: NSObject, ObservableObject {
         audioRecorder?.pause()
         recordingState = .paused
         timer?.invalidate()
+        saveRecordingState()
     }
     
     func resumeRecording() {
         audioRecorder?.record()
         recordingState = .recording
         startTimer()
+        saveRecordingState()
     }
     
-    func stopRecording() {
+    @objc func stopRecording() {
         audioRecorder?.stop()
         recordingState = .idle
         timer?.invalidate()
         
         saveRecording()
+        clearRecordingState()
         onRecordingFinished?()
     }
     
-    // Modified the timer to check if the recording duration has reached 4 hours (14,400 seconds) and stop the recording if so.
     private func startTimer() {
-          timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
-              guard let self = self else { return }
-              self.recordingDuration += 1.0
-              if self.recordingDuration >= 14400 { // 4 hours in seconds
-                  self.stopRecording()
-              }
-          }
-      }
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+            guard let self = self else { return }
+            self.recordingDuration += 1.0
+            if self.recordingDuration >= 14400 { // 4 hours in seconds
+                self.stopRecording()
+            }
+            self.saveRecordingState()
+        }
+    }
     
     private func saveRecording() {
         guard let audioRecorder = audioRecorder else { return }
@@ -121,6 +127,56 @@ class RecorderViewModel: NSObject, ObservableObject {
         } catch {
             print("Error saving recording: \(error.localizedDescription)")
         }
+    }
+    
+    @objc private func saveRecordingState() {
+        guard let audioRecorder = audioRecorder else { return }
+        
+        let recordingStateDict: [String: Any] = [
+            "recordingState": recordingState.rawValue,
+            "recordingDuration": recordingDuration,
+            "audioFileURL": audioRecorder.url.absoluteString
+        ]
+        
+        UserDefaults.standard.set(recordingStateDict, forKey: "recordingState")
+    }
+    
+    private func loadRecordingState() {
+        if let recordingStateDict = UserDefaults.standard.dictionary(forKey: "recordingState") as? [String: Any] {
+            if let recordingStateRawValue = recordingStateDict["recordingState"] as? String,
+               let recordingState = RecordingState(rawValue: recordingStateRawValue),
+               let recordingDuration = recordingStateDict["recordingDuration"] as? TimeInterval,
+               let audioFileURLString = recordingStateDict["audioFileURL"] as? String,
+               let audioFileURL = URL(string: audioFileURLString) {
+                
+                self.recordingState = recordingState
+                self.recordingDuration = recordingDuration
+                
+                if recordingState == .recording || recordingState == .paused {
+                    do {
+                        let audioSettings: [String: Any] = [
+                            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+                            AVSampleRateKey: 44100.0,
+                            AVNumberOfChannelsKey: 2,
+                            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
+                        ]
+                        
+                        audioRecorder = try AVAudioRecorder(url: audioFileURL, settings: audioSettings)
+                        audioRecorder?.delegate = self
+                        if recordingState == .recording {
+                            audioRecorder?.record()
+                            startTimer()
+                        }
+                    } catch {
+                        print("Error loading recording state: \(error.localizedDescription)")
+                    }
+                }
+            }
+        }
+    }
+    
+    private func clearRecordingState() {
+        UserDefaults.standard.removeObject(forKey: "recordingState")
     }
 }
 
