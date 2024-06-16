@@ -17,6 +17,7 @@
 		0B52C2B02C1F1AA4006474C7 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B52C2AF2C1F1AA4006474C7 /* PlayerView.swift */; };
 		0B52C2B22C1F1BF7006474C7 /* RecordingListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B52C2B12C1F1BF7006474C7 /* RecordingListViewModel.swift */; };
 		0B52C2B42C1F1FC4006474C7 /* PlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B52C2B32C1F1FC4006474C7 /* PlayerViewModel.swift */; };
+		0B52C2B72C1F7517006474C7 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B52C2B62C1F7517006474C7 /* StorageManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		0B52C2B12C1F1BF7006474C7 /* RecordingListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingListViewModel.swift; sourceTree = "<group>"; };
 		0B52C2B32C1F1FC4006474C7 /* PlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewModel.swift; sourceTree = "<group>"; };
 		0B52C2B52C1F26C9006474C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		0B52C2B62C1F7517006474C7 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +118,7 @@
 		0B52C2A72C1F0FF7006474C7 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				0B52C2B62C1F7517006474C7 /* StorageManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -200,6 +203,7 @@
 				0B52C2AA2C1F10C8006474C7 /* RecorderViewModel.swift in Sources */,
 				0B52C2B42C1F1FC4006474C7 /* PlayerViewModel.swift in Sources */,
 				0B52C2B22C1F1BF7006474C7 /* RecordingListViewModel.swift in Sources */,
+				0B52C2B72C1F7517006474C7 /* StorageManager.swift in Sources */,
 				0B52C2992C1F085C006474C7 /* ContentView.swift in Sources */,
 				0B52C2AE2C1F1A4E006474C7 /* RecordingsListView.swift in Sources */,
 				0B52C2B02C1F1AA4006474C7 /* PlayerView.swift in Sources */,

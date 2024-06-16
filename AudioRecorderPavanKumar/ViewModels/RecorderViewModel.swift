@@ -48,6 +48,8 @@ class RecorderViewModel: NSObject, ObservableObject {
     func startRecording() {
         let audioSession = AVAudioSession.sharedInstance()
         
+        StorageManager.shared.notifyIfLowDiskSpace()
+        
         do {
             try audioSession.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker, .allowBluetooth, .allowAirPlay, .mixWithOthers])
             try audioSession.setActive(true)
@@ -76,6 +78,7 @@ class RecorderViewModel: NSObject, ObservableObject {
             print("Error starting recording: \(error.localizedDescription)")
         }
     }
+
     
     func pauseRecording() {
         audioRecorder?.pause()

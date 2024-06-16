@@ -4,13 +4,13 @@
 //
 //  Created by Pavankumar Arepu on 16/06/24.
 //
-
 import Foundation
 import SwiftUI
 
 struct RecorderView: View {
     @ObservedObject var viewModel: RecorderViewModel
     @Environment(\.presentationMode) var presentationMode
+    @State private var showAlert = false
     
     var body: some View {
         VStack {
@@ -76,6 +76,12 @@ struct RecorderView: View {
                     self.presentationMode.wrappedValue.dismiss()
                 }
             }
+            NotificationCenter.default.addObserver(forName: Notification.Name("lowDiskSpace"), object: nil, queue: .main) { _ in
+                self.showAlert = true
+            }
+        }
+        .alert(isPresented: $showAlert) {
+            Alert(title: Text("Low Disk Space"), message: Text("Your device is running low on disk space. Please free up some space."), dismissButton: .default(Text("OK")))
         }
     }
 }
