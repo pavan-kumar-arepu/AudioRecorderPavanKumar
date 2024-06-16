@@ -16,6 +16,7 @@
 		0B52C2AE2C1F1A4E006474C7 /* RecordingsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B52C2AD2C1F1A4E006474C7 /* RecordingsListView.swift */; };
 		0B52C2B02C1F1AA4006474C7 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B52C2AF2C1F1AA4006474C7 /* PlayerView.swift */; };
 		0B52C2B22C1F1BF7006474C7 /* RecordingListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B52C2B12C1F1BF7006474C7 /* RecordingListViewModel.swift */; };
+		0B52C2B42C1F1FC4006474C7 /* PlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B52C2B32C1F1FC4006474C7 /* PlayerViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		0B52C2AD2C1F1A4E006474C7 /* RecordingsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingsListView.swift; sourceTree = "<group>"; };
 		0B52C2AF2C1F1AA4006474C7 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		0B52C2B12C1F1BF7006474C7 /* RecordingListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingListViewModel.swift; sourceTree = "<group>"; };
+		0B52C2B32C1F1FC4006474C7 /* PlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 			children = (
 				0B52C2A92C1F10C8006474C7 /* RecorderViewModel.swift */,
 				0B52C2B12C1F1BF7006474C7 /* RecordingListViewModel.swift */,
+				0B52C2B32C1F1FC4006474C7 /* PlayerViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -193,6 +196,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B52C2AA2C1F10C8006474C7 /* RecorderViewModel.swift in Sources */,
+				0B52C2B42C1F1FC4006474C7 /* PlayerViewModel.swift in Sources */,
 				0B52C2B22C1F1BF7006474C7 /* RecordingListViewModel.swift in Sources */,
 				0B52C2992C1F085C006474C7 /* ContentView.swift in Sources */,
 				0B52C2AE2C1F1A4E006474C7 /* RecordingsListView.swift in Sources */,
