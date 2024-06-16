@@ -18,6 +18,8 @@
 		0B52C2B22C1F1BF7006474C7 /* RecordingListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B52C2B12C1F1BF7006474C7 /* RecordingListViewModel.swift */; };
 		0B52C2B42C1F1FC4006474C7 /* PlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B52C2B32C1F1FC4006474C7 /* PlayerViewModel.swift */; };
 		0B52C2B72C1F7517006474C7 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B52C2B62C1F7517006474C7 /* StorageManager.swift */; };
+		0B52C2B92C1F79B0006474C7 /* VolumeMeterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B52C2B82C1F79B0006474C7 /* VolumeMeterView.swift */; };
+		0B52C2BC2C1F7AC6006474C7 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 0B52C2BB2C1F7AC6006474C7 /* SwiftUICharts */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,7 @@
 		0B52C2B32C1F1FC4006474C7 /* PlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewModel.swift; sourceTree = "<group>"; };
 		0B52C2B52C1F26C9006474C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		0B52C2B62C1F7517006474C7 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
+		0B52C2B82C1F79B0006474C7 /* VolumeMeterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeMeterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B52C2BC2C1F7AC6006474C7 /* SwiftUICharts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,6 +105,7 @@
 				0B52C2AB2C1F153C006474C7 /* RecorderView.swift */,
 				0B52C2AD2C1F1A4E006474C7 /* RecordingsListView.swift */,
 				0B52C2AF2C1F1AA4006474C7 /* PlayerView.swift */,
+				0B52C2B82C1F79B0006474C7 /* VolumeMeterView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -146,6 +151,9 @@
 			dependencies = (
 			);
 			name = AudioRecorderPavanKumar;
+			packageProductDependencies = (
+				0B52C2BB2C1F7AC6006474C7 /* SwiftUICharts */,
+			);
 			productName = AudioRecorderPavanKumar;
 			productReference = 0B52C2932C1F085C006474C7 /* AudioRecorderPavanKumar.app */;
 			productType = "com.apple.product-type.application";
@@ -174,6 +182,9 @@
 				Base,
 			);
 			mainGroup = 0B52C28A2C1F085C006474C7;
+			packageReferences = (
+				0B52C2BA2C1F7AC6006474C7 /* XCRemoteSwiftPackageReference "SwiftUICharts" */,
+			);
 			productRefGroup = 0B52C2942C1F085C006474C7 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -204,6 +215,7 @@
 				0B52C2B42C1F1FC4006474C7 /* PlayerViewModel.swift in Sources */,
 				0B52C2B22C1F1BF7006474C7 /* RecordingListViewModel.swift in Sources */,
 				0B52C2B72C1F7517006474C7 /* StorageManager.swift in Sources */,
+				0B52C2B92C1F79B0006474C7 /* VolumeMeterView.swift in Sources */,
 				0B52C2992C1F085C006474C7 /* ContentView.swift in Sources */,
 				0B52C2AE2C1F1A4E006474C7 /* RecordingsListView.swift in Sources */,
 				0B52C2B02C1F1AA4006474C7 /* PlayerView.swift in Sources */,
@@ -415,6 +427,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		0B52C2BA2C1F7AC6006474C7 /* XCRemoteSwiftPackageReference "SwiftUICharts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/willdale/SwiftUICharts.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0B52C2BB2C1F7AC6006474C7 /* SwiftUICharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0B52C2BA2C1F7AC6006474C7 /* XCRemoteSwiftPackageReference "SwiftUICharts" */;
+			productName = SwiftUICharts;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 0B52C28B2C1F085C006474C7 /* Project object */;
 }

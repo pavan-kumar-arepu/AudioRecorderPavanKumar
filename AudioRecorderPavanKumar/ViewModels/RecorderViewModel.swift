@@ -43,42 +43,44 @@ class RecorderViewModel: NSObject, ObservableObject {
         return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
     }
     
+//    @Published var audioLevel: Float = 0.0
+    @Published var audioLevels: [Float] = []
+    
     // MARK: - Recording Actions
 
     func startRecording() {
-        let audioSession = AVAudioSession.sharedInstance()
-        
-        StorageManager.shared.notifyIfLowDiskSpace()
-        
-        do {
-            try audioSession.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker, .allowBluetooth, .allowAirPlay, .mixWithOthers])
-            try audioSession.setActive(true)
+            let audioSession = AVAudioSession.sharedInstance()
             
-            let audioSettings: [String: Any] = [
-                AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
-                AVSampleRateKey: 44100.0,
-                AVNumberOfChannelsKey: 2,
-                AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
-            ]
-            
-            let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyyMMddHHmmss"
-            let timestamp = dateFormatter.string(from: Date())
-            let audioFileURL = documentsPath.appendingPathComponent("recording_\(timestamp).m4a")
-            
-            audioRecorder = try AVAudioRecorder(url: audioFileURL, settings: audioSettings)
-            audioRecorder?.delegate = self
-            audioRecorder?.record()
-            recordingState = .recording
-            
-            startTimer()
-            saveRecordingState()
-        } catch {
-            print("Error starting recording: \(error.localizedDescription)")
+            do {
+                try audioSession.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker, .allowBluetooth, .allowAirPlay, .mixWithOthers])
+                try audioSession.setActive(true)
+                
+                let audioSettings: [String: Any] = [
+                    AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+                    AVSampleRateKey: 44100.0,
+                    AVNumberOfChannelsKey: 2,
+                    AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
+                ]
+                
+                let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyyMMddHHmmss"
+                let timestamp = dateFormatter.string(from: Date())
+                let audioFileURL = documentsPath.appendingPathComponent("recording_\(timestamp).m4a")
+                
+                audioRecorder = try AVAudioRecorder(url: audioFileURL, settings: audioSettings)
+                audioRecorder?.delegate = self
+                audioRecorder?.isMeteringEnabled = true // Enable metering
+                audioRecorder?.record()
+                recordingState = .recording
+                
+                startTimer()
+                saveRecordingState()
+            } catch {
+                print("Error starting recording: \(error.localizedDescription)")
+            }
         }
-    }
-
+     
     
     func pauseRecording() {
         audioRecorder?.pause()
@@ -105,13 +107,19 @@ class RecorderViewModel: NSObject, ObservableObject {
     }
     
     private func startTimer() {
-        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+        timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
             guard let self = self else { return }
-            self.recordingDuration += 1.0
-            if self.recordingDuration >= 14400 { // 4 hours in seconds
-                self.stopRecording()
+            self.recordingDuration += 0.1
+            
+            // Update audio level
+            self.audioRecorder?.updateMeters()
+            let level = self.audioRecorder?.averagePower(forChannel: 0) ?? -160.0
+            self.audioLevels.append(level)
+            
+            // Keep only the latest 50 levels for display
+            if self.audioLevels.count > 50 {
+                self.audioLevels.removeFirst()
             }
-            self.saveRecordingState()
         }
     }
     

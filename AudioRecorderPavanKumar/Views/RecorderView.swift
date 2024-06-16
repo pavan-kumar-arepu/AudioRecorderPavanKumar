@@ -18,6 +18,10 @@ struct RecorderView: View {
                 .font(.largeTitle)
                 .padding()
             
+            VolumeMeterView(levels: viewModel.audioLevels)
+                .frame(height: 100)
+                .padding()
+            
             HStack {
                 if viewModel.recordingState == .idle {
                     Button(action: {
