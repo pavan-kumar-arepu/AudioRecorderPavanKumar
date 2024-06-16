@@ -7,7 +7,6 @@
 
 import Foundation
 import SwiftUI
-import SwiftUI
 
 struct RecordingsListView: View {
     @StateObject var viewModel = RecordingsListViewModel()
@@ -43,7 +42,9 @@ struct RecordingsListView: View {
                         .padding()
                 }
             }
-            .sheet(isPresented: $showingRecorder) {
+            .sheet(isPresented: $showingRecorder, onDismiss: {
+                viewModel.fetchRecordings()
+            }) {
                 RecorderView(viewModel: RecorderViewModel())
             }
         }

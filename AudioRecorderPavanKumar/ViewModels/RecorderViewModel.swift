@@ -27,6 +27,8 @@ class RecorderViewModel: NSObject, ObservableObject {
     private var audioRecorder: AVAudioRecorder?
     private var timer: Timer?
     
+    var onRecordingFinished: (() -> Void)?
+    
     override init() {
         super.init()
     }
@@ -66,7 +68,7 @@ class RecorderViewModel: NSObject, ObservableObject {
             
             startTimer()
         } catch {
-            print("**** Error starting recording: \(error.localizedDescription)")
+            print("Error starting recording: \(error.localizedDescription)")
         }
     }
     
@@ -88,6 +90,7 @@ class RecorderViewModel: NSObject, ObservableObject {
         timer?.invalidate()
         
         saveRecording()
+        onRecordingFinished?()
     }
     
     private func startTimer() {
@@ -108,9 +111,9 @@ class RecorderViewModel: NSObject, ObservableObject {
         
         do {
             try FileManager.default.moveItem(at: sourceURL, to: destinationURL)
-            print("#### Recording saved to FileManager: \(destinationURL)")
+            print("Recording saved to FileManager: \(destinationURL)")
         } catch {
-            print("**** Error saving recording: \(error.localizedDescription)")
+            print("Error saving recording: \(error.localizedDescription)")
         }
     }
 }
