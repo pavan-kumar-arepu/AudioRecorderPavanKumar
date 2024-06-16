@@ -23,6 +23,8 @@ class RecorderViewModel: NSObject, ObservableObject {
     
     @Published var recordingState: RecordingState = .idle
     @Published var recordingDuration: TimeInterval = 0.0
+    @Published var recordings: [URL] = [] // Keep track of recordings
+    
     
     private var audioRecorder: AVAudioRecorder?
     private var timer: Timer?
@@ -43,44 +45,68 @@ class RecorderViewModel: NSObject, ObservableObject {
         return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
     }
     
-//    @Published var audioLevel: Float = 0.0
+    //    @Published var audioLevel: Float = 0.0
     @Published var audioLevels: [Float] = []
     
     // MARK: - Recording Actions
-
+    
     func startRecording() {
-            let audioSession = AVAudioSession.sharedInstance()
+        let audioSession = AVAudioSession.sharedInstance()
+        
+        do {
+            try audioSession.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker, .allowBluetooth, .allowAirPlay, .mixWithOthers])
+            try audioSession.setActive(true)
             
-            do {
-                try audioSession.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker, .allowBluetooth, .allowAirPlay, .mixWithOthers])
-                try audioSession.setActive(true)
-                
-                let audioSettings: [String: Any] = [
-                    AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
-                    AVSampleRateKey: 44100.0,
-                    AVNumberOfChannelsKey: 2,
-                    AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
-                ]
-                
-                let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "yyyyMMddHHmmss"
-                let timestamp = dateFormatter.string(from: Date())
-                let audioFileURL = documentsPath.appendingPathComponent("recording_\(timestamp).m4a")
-                
-                audioRecorder = try AVAudioRecorder(url: audioFileURL, settings: audioSettings)
-                audioRecorder?.delegate = self
-                audioRecorder?.isMeteringEnabled = true // Enable metering
-                audioRecorder?.record()
-                recordingState = .recording
-                
-                startTimer()
-                saveRecordingState()
-            } catch {
-                print("Error starting recording: \(error.localizedDescription)")
-            }
+            let audioSettings: [String: Any] = [
+                AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+                AVSampleRateKey: 44100.0,
+                AVNumberOfChannelsKey: 2,
+                AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
+            ]
+            
+            let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyyMMddHHmmss"
+            let timestamp = dateFormatter.string(from: Date())
+            let audioFileURL = documentsPath.appendingPathComponent("recording_\(timestamp).m4a")
+            
+            audioRecorder = try AVAudioRecorder(url: audioFileURL, settings: audioSettings)
+            audioRecorder?.delegate = self
+            audioRecorder?.isMeteringEnabled = true // Enable metering
+            audioRecorder?.record()
+            recordingState = .recording
+            
+            startTimer()
+            saveRecordingState()
+        } catch {
+            print("Error starting recording: \(error.localizedDescription)")
         }
-     
+    }
+    
+    func renameRecording(at index: Int, to newName: String) {
+        let oldURL = recordings[index]
+        let newURL = oldURL.deletingLastPathComponent().appendingPathComponent("\(newName).m4a")
+        
+        do {
+            try FileManager.default.moveItem(at: oldURL, to: newURL)
+            recordings[index] = newURL
+            print("Recording renamed to: \(newURL.lastPathComponent)")
+        } catch {
+            print("Error renaming recording: \(error.localizedDescription)")
+        }
+    }
+    
+    func deleteRecording(at index: Int) {
+        let recordingURL = recordings[index]
+        
+        do {
+            try FileManager.default.removeItem(at: recordingURL)
+            recordings.remove(at: index)
+            print("Recording deleted: \(recordingURL.lastPathComponent)")
+        } catch {
+            print("Error deleting recording: \(error.localizedDescription)")
+        }
+    }
     
     func pauseRecording() {
         audioRecorder?.pause()

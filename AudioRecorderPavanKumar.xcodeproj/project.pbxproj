@@ -20,6 +20,7 @@
 		0B52C2B72C1F7517006474C7 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B52C2B62C1F7517006474C7 /* StorageManager.swift */; };
 		0B52C2B92C1F79B0006474C7 /* VolumeMeterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B52C2B82C1F79B0006474C7 /* VolumeMeterView.swift */; };
 		0B52C2BC2C1F7AC6006474C7 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 0B52C2BB2C1F7AC6006474C7 /* SwiftUICharts */; };
+		0B52C2BE2C1F8288006474C7 /* RenameRecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B52C2BD2C1F8288006474C7 /* RenameRecordingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		0B52C2B52C1F26C9006474C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		0B52C2B62C1F7517006474C7 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		0B52C2B82C1F79B0006474C7 /* VolumeMeterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeMeterView.swift; sourceTree = "<group>"; };
+		0B52C2BD2C1F8288006474C7 /* RenameRecordingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameRecordingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 				0B52C2AD2C1F1A4E006474C7 /* RecordingsListView.swift */,
 				0B52C2AF2C1F1AA4006474C7 /* PlayerView.swift */,
 				0B52C2B82C1F79B0006474C7 /* VolumeMeterView.swift */,
+				0B52C2BD2C1F8288006474C7 /* RenameRecordingView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -220,6 +223,7 @@
 				0B52C2AE2C1F1A4E006474C7 /* RecordingsListView.swift in Sources */,
 				0B52C2B02C1F1AA4006474C7 /* PlayerView.swift in Sources */,
 				0B52C2AC2C1F153C006474C7 /* RecorderView.swift in Sources */,
+				0B52C2BE2C1F8288006474C7 /* RenameRecordingView.swift in Sources */,
 				0B52C2972C1F085C006474C7 /* AudioRecorderPavanKumarApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
