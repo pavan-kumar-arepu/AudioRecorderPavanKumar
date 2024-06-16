@@ -21,52 +21,63 @@ struct PlayerView: View {
     
     var body: some View {
         VStack {
+            Image("playing")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 175, height: 175) // Adjust size as needed
+                .padding()
+            
             if let audioURL = viewModel.audioURL {
                 Text(audioURL.lastPathComponent)
                     .font(.headline)
                     .padding()
             }
             
-            if viewModel.isPlaying {
-                Button(action: {
-                    viewModel.pauseAudio()
-                }) {
-                    Text("Pause")
-                        .font(.headline)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.red)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                        .padding()
-                }
-            } else {
-                Button(action: {
-                    viewModel.playAudio()
-                }) {
-                    Text("Play")
-                        .font(.headline)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.green)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                        .padding()
-                }
-            }
+            Spacer()
             
-            Button(action: {
-                renameAction() // Trigger rename action
-            }) {
-                Text("Rename")
-                    .font(.headline)
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-                    .padding()
+            HStack {
+                if viewModel.isPlaying {
+                    Button(action: {
+                        viewModel.pauseAudio()
+                    }) {
+                        Text("Pause")
+                            .font(.headline)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.red)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                            .padding()
+                    }
+                } else {
+                    Button(action: {
+                        viewModel.playAudio()
+                    }) {
+                        Text("Play")
+                            .font(.headline)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.green)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                            .padding()
+                    }
+                }
+                
+                Button(action: {
+                    renameAction() // Trigger rename action
+                }) {
+                    Text("Rename")
+                        .font(.headline)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                        .padding()
+                }
             }
+            .padding()
         }
         .navigationTitle("Player")
     }

@@ -10,17 +10,34 @@ import SwiftUI
 struct RecorderView: View {
     @ObservedObject var viewModel: RecorderViewModel
     @Environment(\.presentationMode) var presentationMode
-    @State private var showAlert = false
     
     var body: some View {
         VStack {
+            Spacer()
+            
+            Text("I am listening") // Title text
+                      .font(.title)
+                      .padding()
+                  
+                  Spacer()
+            
+            // Hearing indicator image
+                      Image("eavesdropping")
+                          .resizable()
+                          .aspectRatio(contentMode: .fit)
+                          .frame(width: 175, height: 175) // Adjust size as needed
+                          .padding()
+                      
+            
             Text(viewModel.recordingDurationFormatted)
                 .font(.largeTitle)
                 .padding()
             
             VolumeMeterView(levels: viewModel.audioLevels)
-                .frame(height: 100)
-                .padding()
+                    .frame(height: 100)
+                    .padding()
+            
+            Spacer()
             
             HStack {
                 if viewModel.recordingState == .idle {
@@ -30,6 +47,7 @@ struct RecorderView: View {
                         Text("Record")
                             .font(.headline)
                             .padding()
+                            .frame(maxWidth: .infinity)
                             .background(Color.red)
                             .foregroundColor(.white)
                             .cornerRadius(10)
@@ -41,6 +59,7 @@ struct RecorderView: View {
                         Text("Pause")
                             .font(.headline)
                             .padding()
+                            .frame(maxWidth: .infinity)
                             .background(Color.yellow)
                             .foregroundColor(.black)
                             .cornerRadius(10)
@@ -52,6 +71,7 @@ struct RecorderView: View {
                         Text("Resume")
                             .font(.headline)
                             .padding()
+                            .frame(maxWidth: .infinity)
                             .background(Color.green)
                             .foregroundColor(.white)
                             .cornerRadius(10)
@@ -66,6 +86,7 @@ struct RecorderView: View {
                         Text("Stop")
                             .font(.headline)
                             .padding()
+                            .frame(maxWidth: .infinity)
                             .background(Color.blue)
                             .foregroundColor(.white)
                             .cornerRadius(10)
@@ -73,19 +94,10 @@ struct RecorderView: View {
                 }
             }
             .padding()
+            .navigationTitle("Recording") // Title for the RenameRecordingView
         }
-        .onAppear {
-            viewModel.onRecordingFinished = {
-                DispatchQueue.main.async {
-                    self.presentationMode.wrappedValue.dismiss()
-                }
-            }
-            NotificationCenter.default.addObserver(forName: Notification.Name("lowDiskSpace"), object: nil, queue: .main) { _ in
-                self.showAlert = true
-            }
-        }
-        .alert(isPresented: $showAlert) {
-            Alert(title: Text("Low Disk Space"), message: Text("Your device is running low on disk space. Please free up some space."), dismissButton: .default(Text("OK")))
+        .onDisappear {
+            viewModel.stopRecording() // Ensure recording stops when view disappears
         }
     }
 }

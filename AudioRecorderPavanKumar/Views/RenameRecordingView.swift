@@ -15,6 +15,14 @@ struct RenameRecordingView: View {
     
     var body: some View {
         VStack {
+            
+            Text("Rename") // Title text
+                      .font(.title)
+                      .padding()
+            Spacer()
+               
+            
+            
             TextField("New Name", text: $newName)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()

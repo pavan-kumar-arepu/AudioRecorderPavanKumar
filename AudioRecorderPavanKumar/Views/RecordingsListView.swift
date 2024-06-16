@@ -21,37 +21,62 @@ struct RecordingsListView: View {
     
     var body: some View {
         NavigationView {
-            VStack {
-                List {
-                    ForEach(viewModel.recordings.indices, id: \.self) { index in
-                        let url = viewModel.recordings[index]
-                        NavigationLink(destination: PlayerView(audioURL: url, renameAction: {
-                            renameIndex = index
-                            isRenameViewPresented = true
-                        })) {
-                            VStack(alignment: .leading) {
-                                Text(url.lastPathComponent)
-                                Text(self.formatDate(from: url))
-                                    .font(.subheadline)
-                                    .foregroundColor(.gray)
+            ZStack {
+                // Gradient background from parrot green to slight white
+                LinearGradient(gradient: Gradient(colors: [Color.parrotGreen, Color.white.opacity(0.1)]), startPoint: .top, endPoint: .bottom)
+                    .edgesIgnoringSafeArea(.all)
+                
+                VStack {
+                    List {
+                        ForEach(viewModel.recordings.indices, id: \.self) { index in
+                            let url = viewModel.recordings[index]
+                            NavigationLink(destination: PlayerView(audioURL: url, renameAction: {
+                                renameIndex = index
+                                isRenameViewPresented = true
+                            })) {
+                                VStack(alignment: .leading) {
+                                    Text(url.lastPathComponent)
+                                    Text(self.formatDate(from: url))
+                                        .font(.subheadline)
+                                        .foregroundColor(.gray)
+                                }
+                            }
+                            .contextMenu {
+                                Button(action: {
+                                    renameIndex = index
+                                    isRenameViewPresented = true
+                                }) {
+                                    Text("Rename")
+                                    Image(systemName: "pencil")
+                                }
+                                
+                                Button(action: {
+                                    viewModel.deleteRecording(at: index)
+                                }) {
+                                    Text("Delete")
+                                    Image(systemName: "trash")
+                                }
                             }
                         }
+                        .onDelete(perform: deleteRecordings)
                     }
-                    .onDelete(perform: deleteRecordings)
-                }
-                .navigationTitle("Recordings")
-                
-                Button(action: {
-                    showingRecorder = true
-                }) {
-                    Text("Start New Recording")
-                        .font(.headline)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                        .padding()
+                    .background(Color.clear) // Background color for table cells
+                    .navigationTitle("Recordings")
+                    .cornerRadius(10) // Optional: Rounded corners for the List
+                    .padding()
+                    
+                    Button(action: {
+                        showingRecorder = true
+                    }) {
+                        Text("Start New Recording")
+                            .font(.headline)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                            .padding()
+                    }
                 }
             }
             .sheet(isPresented: $isRenameViewPresented) {
@@ -66,6 +91,9 @@ struct RecordingsListView: View {
                 viewModel.fetchRecordings()
             }) {
                 RecorderView(viewModel: RecorderViewModel())
+            }
+            .onAppear {
+                viewModel.fetchRecordings()
             }
         }
     }

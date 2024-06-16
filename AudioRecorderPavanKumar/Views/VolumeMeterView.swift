@@ -7,7 +7,6 @@
 
 import Foundation
 import SwiftUI
-import SwiftUICharts
 
 struct VolumeMeterView: View {
     var levels: [Float]
