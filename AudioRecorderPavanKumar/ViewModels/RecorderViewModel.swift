@@ -9,28 +9,36 @@ import Foundation
 import SwiftUI
 import Combine
 import AVFoundation
-
-/*
- In Swift, classes must inherit from NSObject to interoperate with Objective-C protocols.
- */
-import Foundation
-import AVFoundation
+/// Manages audio recording state and operations.
+///
+/// This class encapsulates audio recording functionality using `AVAudioRecorder`.
+/// It provides methods to start, pause, resume, stop, rename, and delete recordings,
+/// as well as managing the recording state and duration.
+///
+/// - Author: Arepu Pavan Kumar
 
 class RecorderViewModel: NSObject, ObservableObject {
+    /// Enum representing the possible states of audio recording.
     enum RecordingState: String {
         case idle, recording, paused
     }
     
+    /// Published property to observe changes in recording state.
     @Published var recordingState: RecordingState = .idle
+    /// Published property to observe changes in recording duration.
     @Published var recordingDuration: TimeInterval = 0.0
-    @Published var recordings: [URL] = [] // Keep track of recordings
+    /// Array to store URLs of recorded audio files.
+    @Published var recordings: [URL] = []
     
-    
+    /// Private property to manage `AVAudioRecorder` instance.
     private var audioRecorder: AVAudioRecorder?
+    /// Timer to update recording duration and audio levels.
     private var timer: Timer?
     
+    /// Closure to handle actions after recording finishes.
     var onRecordingFinished: (() -> Void)?
     
+    /// Initializes the `RecorderViewModel` and sets up necessary observers.
     override init() {
         super.init()
         loadRecordingState()
@@ -38,6 +46,7 @@ class RecorderViewModel: NSObject, ObservableObject {
         NotificationCenter.default.addObserver(self, selector: #selector(saveRecordingState), name: Notification.Name("saveRecordingState"), object: nil)
     }
     
+    /// Formatted string representation of the recording duration (HH:mm:ss).
     var recordingDurationFormatted: String {
         let hours = Int(recordingDuration) / 3600
         let minutes = (Int(recordingDuration) % 3600) / 60
@@ -45,11 +54,12 @@ class RecorderViewModel: NSObject, ObservableObject {
         return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
     }
     
-    //    @Published var audioLevel: Float = 0.0
+    /// Array to store audio levels for volume meter visualization.
     @Published var audioLevels: [Float] = []
     
     // MARK: - Recording Actions
     
+    /// Starts recording audio.
     func startRecording() {
         let audioSession = AVAudioSession.sharedInstance()
         
@@ -83,6 +93,10 @@ class RecorderViewModel: NSObject, ObservableObject {
         }
     }
     
+    /// Renames the recorded audio file at a specified index.
+    /// - Parameters:
+    ///   - index: Index of the recording in the `recordings` array.
+    ///   - newName: New name to assign to the recording.
     func renameRecording(at index: Int, to newName: String) {
         let oldURL = recordings[index]
         let newURL = oldURL.deletingLastPathComponent().appendingPathComponent("\(newName).m4a")
@@ -96,6 +110,8 @@ class RecorderViewModel: NSObject, ObservableObject {
         }
     }
     
+    /// Deletes the recorded audio file at a specified index.
+    /// - Parameter index: Index of the recording in the `recordings` array.
     func deleteRecording(at index: Int) {
         let recordingURL = recordings[index]
         
@@ -108,6 +124,7 @@ class RecorderViewModel: NSObject, ObservableObject {
         }
     }
     
+    /// Pauses the current audio recording.
     func pauseRecording() {
         audioRecorder?.pause()
         recordingState = .paused
@@ -115,6 +132,7 @@ class RecorderViewModel: NSObject, ObservableObject {
         saveRecordingState()
     }
     
+    /// Resumes the paused audio recording.
     func resumeRecording() {
         audioRecorder?.record()
         recordingState = .recording
@@ -122,6 +140,7 @@ class RecorderViewModel: NSObject, ObservableObject {
         saveRecordingState()
     }
     
+    /// Stops the current audio recording.
     @objc func stopRecording() {
         audioRecorder?.stop()
         recordingState = .idle
@@ -132,6 +151,9 @@ class RecorderViewModel: NSObject, ObservableObject {
         onRecordingFinished?()
     }
     
+    // MARK: - Private Methods
+    
+    /// Starts a timer to update recording duration and audio levels.
     private func startTimer() {
         timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
             guard let self = self else { return }
@@ -149,6 +171,7 @@ class RecorderViewModel: NSObject, ObservableObject {
         }
     }
     
+    /// Saves the recorded audio file to the document directory.
     private func saveRecording() {
         guard let audioRecorder = audioRecorder else { return }
         
@@ -166,6 +189,7 @@ class RecorderViewModel: NSObject, ObservableObject {
         }
     }
     
+    /// Saves the current recording state to `UserDefaults`.
     @objc private func saveRecordingState() {
         guard let audioRecorder = audioRecorder else { return }
         
@@ -178,6 +202,7 @@ class RecorderViewModel: NSObject, ObservableObject {
         UserDefaults.standard.set(recordingStateDict, forKey: "recordingState")
     }
     
+    /// Loads the previous recording state from `UserDefaults`.
     private func loadRecordingState() {
         if let recordingStateDict = UserDefaults.standard.dictionary(forKey: "recordingState") as? [String: Any] {
             if let recordingStateRawValue = recordingStateDict["recordingState"] as? String,
@@ -212,10 +237,13 @@ class RecorderViewModel: NSObject, ObservableObject {
         }
     }
     
+    /// Clears the saved recording state from `UserDefaults`.
     private func clearRecordingState() {
         UserDefaults.standard.removeObject(forKey: "recordingState")
     }
 }
+
+// MARK: - AVAudioRecorderDelegate
 
 extension RecorderViewModel: AVAudioRecorderDelegate {
     func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
