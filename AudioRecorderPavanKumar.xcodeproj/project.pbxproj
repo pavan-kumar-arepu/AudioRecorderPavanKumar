@@ -13,6 +13,9 @@
 		0B52C29E2C1F085F006474C7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B52C29D2C1F085F006474C7 /* Preview Assets.xcassets */; };
 		0B52C2AA2C1F10C8006474C7 /* RecorderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B52C2A92C1F10C8006474C7 /* RecorderViewModel.swift */; };
 		0B52C2AC2C1F153C006474C7 /* RecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B52C2AB2C1F153C006474C7 /* RecorderView.swift */; };
+		0B52C2AE2C1F1A4E006474C7 /* RecordingsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B52C2AD2C1F1A4E006474C7 /* RecordingsListView.swift */; };
+		0B52C2B02C1F1AA4006474C7 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B52C2AF2C1F1AA4006474C7 /* PlayerView.swift */; };
+		0B52C2B22C1F1BF7006474C7 /* RecordingListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B52C2B12C1F1BF7006474C7 /* RecordingListViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +26,9 @@
 		0B52C29D2C1F085F006474C7 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0B52C2A92C1F10C8006474C7 /* RecorderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecorderViewModel.swift; sourceTree = "<group>"; };
 		0B52C2AB2C1F153C006474C7 /* RecorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecorderView.swift; sourceTree = "<group>"; };
+		0B52C2AD2C1F1A4E006474C7 /* RecordingsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingsListView.swift; sourceTree = "<group>"; };
+		0B52C2AF2C1F1AA4006474C7 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
+		0B52C2B12C1F1BF7006474C7 /* RecordingListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingListViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +93,8 @@
 			isa = PBXGroup;
 			children = (
 				0B52C2AB2C1F153C006474C7 /* RecorderView.swift */,
+				0B52C2AD2C1F1A4E006474C7 /* RecordingsListView.swift */,
+				0B52C2AF2C1F1AA4006474C7 /* PlayerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -95,6 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				0B52C2A92C1F10C8006474C7 /* RecorderViewModel.swift */,
+				0B52C2B12C1F1BF7006474C7 /* RecordingListViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -184,7 +193,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B52C2AA2C1F10C8006474C7 /* RecorderViewModel.swift in Sources */,
+				0B52C2B22C1F1BF7006474C7 /* RecordingListViewModel.swift in Sources */,
 				0B52C2992C1F085C006474C7 /* ContentView.swift in Sources */,
+				0B52C2AE2C1F1A4E006474C7 /* RecordingsListView.swift in Sources */,
+				0B52C2B02C1F1AA4006474C7 /* PlayerView.swift in Sources */,
 				0B52C2AC2C1F153C006474C7 /* RecorderView.swift in Sources */,
 				0B52C2972C1F085C006474C7 /* AudioRecorderPavanKumarApp.swift in Sources */,
 			);

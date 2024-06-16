@@ -24,6 +24,8 @@ class RecorderViewModel: NSObject, ObservableObject {
     private var audioRecorder: AVAudioRecorder?
     private var timer: Timer?
     
+    // MARK: - Recording Actions
+
     func startRecording() {
         // Which takes case about Recording
         let audioSession = AVAudioSession.sharedInstance()
@@ -72,6 +74,8 @@ class RecorderViewModel: NSObject, ObservableObject {
         audioRecorder?.stop()
         recordingState = .idle
         timer?.invalidate()
+        
+        saveRecording()
     }
 
     private func startTimer() {
@@ -79,6 +83,26 @@ class RecorderViewModel: NSObject, ObservableObject {
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
             guard let self = self else { return }
             self.recordingDuration += 1.0
+        }
+    }
+    
+    private func saveRecording() {
+        guard let audioRecorder = audioRecorder else { return }
+        
+        audioRecorder.stop()
+        
+        let sourceURL = audioRecorder.url
+        let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let destinationURL = documentsPath.appendingPathComponent("savedRecording.m4a")
+        
+        do {
+            try FileManager.default.moveItem(at: sourceURL, to: destinationURL)
+            print("Recording saved to FileManager: \(destinationURL)")
+            
+            // Optionally, you can update your data model or trigger any necessary UI updates here
+            
+        } catch {
+            print("Error saving recording: \(error.localizedDescription)")
         }
     }
 }
