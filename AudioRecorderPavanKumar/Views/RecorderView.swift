@@ -7,6 +7,14 @@
 import Foundation
 import SwiftUI
 
+/// View for recording audio with visual feedback and controls.
+///
+/// This view provides a user interface for recording audio using `RecorderViewModel`.
+/// It displays the current recording duration, a volume meter, and buttons to control
+/// recording actions such as start, pause, resume, and stop. The view adjusts its
+/// appearance and behavior based on the current state of `RecorderViewModel`.
+///
+/// - Author: Arepu Pavan Kumar
 struct RecorderView: View {
     @ObservedObject var viewModel: RecorderViewModel
     @Environment(\.presentationMode) var presentationMode
@@ -16,26 +24,25 @@ struct RecorderView: View {
             Spacer()
             
             Text("I am listening") // Title text
-                      .font(.title)
-                      .padding()
-                  
-                  Spacer()
+                .font(.title)
+                .padding()
+            
+            Spacer()
             
             // Hearing indicator image
-                      Image("eavesdropping")
-                          .resizable()
-                          .aspectRatio(contentMode: .fit)
-                          .frame(width: 175, height: 175) // Adjust size as needed
-                          .padding()
-                      
+            Image("eavesdropping")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 175, height: 175) // Adjust size as needed
+                .padding()
             
             Text(viewModel.recordingDurationFormatted)
                 .font(.largeTitle)
                 .padding()
             
             VolumeMeterView(levels: viewModel.audioLevels)
-                    .frame(height: 100)
-                    .padding()
+                .frame(height: 100)
+                .padding()
             
             Spacer()
             
@@ -102,6 +109,7 @@ struct RecorderView: View {
     }
 }
 
+/// Previews for `RecorderView`.
 struct RecorderView_Previews: PreviewProvider {
     static var previews: some View {
         RecorderView(viewModel: RecorderViewModel())
