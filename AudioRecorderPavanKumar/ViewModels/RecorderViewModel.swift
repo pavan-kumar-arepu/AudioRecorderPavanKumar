@@ -18,7 +18,7 @@ import AVFoundation
 /// - Author: Arepu Pavan Kumar
 
 class RecorderViewModel: NSObject, ObservableObject {
-    /// Enum representing the possible states of audio recording.
+    /// Enum representing the possible states of audio recording., ofcouse, we can keep enum outside of class also
     enum RecordingState: String {
         case idle, recording, paused
     }
@@ -254,7 +254,7 @@ extension RecorderViewModel: AVAudioRecorderDelegate {
         if flag {
             print("#### Recording finished successfully")
         } else {
-            print("**** Recording finished with failure")
+            print("**** APK: Recording finished with failure")
         }
     }
 }

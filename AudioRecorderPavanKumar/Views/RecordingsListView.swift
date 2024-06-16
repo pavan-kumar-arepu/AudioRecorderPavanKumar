@@ -8,10 +8,23 @@
 import Foundation
 import SwiftUI
 
+/// This struct encapsulates an integer ID that represents the index of items in a list or collection
+/// where renaming is applicable. It conforms to the Identifiable protocol, allowing it to be used
+/// in SwiftUI views for uniquely identifying items.
+///
+///
 struct RenameIndex: Identifiable {
     let id: Int
 }
 
+/// View for managing and displaying a list of recordings.
+///
+/// This view presents a list of audio recordings stored in the app's document directory.
+/// It allows users to perform actions such as playing recordings, renaming them, and deleting them.
+/// Each recording is displayed with its name and timestamp, and users can initiate new recordings.
+///
+/// - Author: Arepu Pavan Kumar
+/// 
 struct RecordingsListView: View {
     @StateObject var viewModel = RecordingsListViewModel()
     @State private var showingRecorder = false
@@ -98,12 +111,19 @@ struct RecordingsListView: View {
         }
     }
     
+    /// Deletes recordings at the specified offsets.
+    ///
+    /// - Parameter offsets: Index set of recordings to delete.
     private func deleteRecordings(at offsets: IndexSet) {
         offsets.forEach { index in
             viewModel.deleteRecording(at: index)
         }
     }
     
+    /// Formats the date from the given URL.
+    ///
+    /// - Parameter url: URL of the recording file.
+    /// - Returns: Formatted date string based on the recording's timestamp.
     private func formatDate(from url: URL) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyyMMddHHmmss"
@@ -120,6 +140,7 @@ struct RecordingsListView: View {
     }
 }
 
+/// Previews for `RecordingsListView`.
 struct RecordingsListView_Previews: PreviewProvider {
     static var previews: some View {
         RecordingsListView()
