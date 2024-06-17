@@ -26,17 +26,26 @@ struct RenameRecordingView: View {
     
     var body: some View {
         VStack {
-            
             Text("Rename") // Title text
-                      .font(.title)
-                      .padding()
-            Spacer()
-               
+                .font(.title)
+                .padding()
             
+            Spacer()
+            
+            // Image indicating audio playback
+            Image("edit")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 175, height: 175) // Adjust size as needed
+                .padding()
+            
+            Spacer()
             
             TextField("New Name", text: $newName)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
+            
+            Spacer()
             
             HStack {
                 Button(action: {
@@ -44,9 +53,11 @@ struct RenameRecordingView: View {
                     isPresented = false
                 }) {
                     Text("Rename")
+                        .font(.headline)
                         .padding()
-                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
                         .background(Color.blue)
+                        .foregroundColor(.white)
                         .cornerRadius(10)
                 }
                 
@@ -54,13 +65,16 @@ struct RenameRecordingView: View {
                     isPresented = false
                 }) {
                     Text("Cancel")
+                        .font(.headline)
                         .padding()
-                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
                         .background(Color.gray)
+                        .foregroundColor(.white)
                         .cornerRadius(10)
                 }
             }
             .padding()
+            .frame(maxWidth: .infinity)
         }
         .padding()
     }
