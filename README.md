@@ -85,34 +85,19 @@ To minimize app space usage:
 
 ## App Screenshots
 
-### RecordingList
-![RecordingList](https://github.com/pavan-kumar-arepu/AudioRecorderPavanKumar/assets/13812858/4ac54b92-c338-43db-a034-89eb90c89b29)
+### Recording List
+<img src="https://github.com/pavan-kumar-arepu/AudioRecorderPavanKumar/assets/13812858/4ac54b92-c338-43db-a034-89eb90c89b29" width="30%" />
+<img src="https://github.com/pavan-kumar-arepu/AudioRecorderPavanKumar/assets/13812858/22f9574e-a714-4e6b-a621-3a3d71bc31d1" width="30%" />
+<img src="https://github.com/pavan-kumar-arepu/AudioRecorderPavanKumar/assets/13812858/2b347d40-681a-4d64-936e-385a16960c26" width="30%" />
 
-### Recorder Ideal State
-![RecorderIdle](https://github.com/pavan-kumar-arepu/AudioRecorderPavanKumar/assets/13812858/22f9574e-a714-4e6b-a621-3a3d71bc31d1)
+### Recorder States
+<img src="https://github.com/pavan-kumar-arepu/AudioRecorderPavanKumar/assets/13812858/c57f099d-e4a6-41ae-a2dc-5bd58bc49a9a" width="30%" />
+<img src="https://github.com/pavan-kumar-arepu/AudioRecorderPavanKumar/assets/13812858/27585dd1-1107-4c05-a76c-8704c3f0c90c" width="30%" />
+<img src="https://github.com/pavan-kumar-arepu/AudioRecorderPavanKumar/assets/13812858/d2b4f3ba-242a-4bdc-9b59-93e1594cf090" width="30%" />
 
-
-### Recorder Pause State
-![Recoder_Paused](https://github.com/pavan-kumar-arepu/AudioRecorderPavanKumar/assets/13812858/2b347d40-681a-4d64-936e-385a16960c26)
-
-
-### Recorder Listening State
-![Recorder_Listening](https://github.com/pavan-kumar-arepu/AudioRecorderPavanKumar/assets/13812858/c57f099d-e4a6-41ae-a2dc-5bd58bc49a9a)
-
-
-### Rename Audio File
-![RenamePlayer](https://github.com/pavan-kumar-arepu/AudioRecorderPavanKumar/assets/13812858/27585dd1-1107-4c05-a76c-8704c3f0c90c)
-
-
-### Player Pause State
-![PausePlayer](https://github.com/pavan-kumar-arepu/AudioRecorderPavanKumar/assets/13812858/d2b4f3ba-242a-4bdc-9b59-93e1594cf090)
-
-
-### Player Active State
-![Player](https://github.com/pavan-kumar-arepu/AudioRecorderPavanKumar/assets/13812858/2f77d193-2aae-4dbf-ac0f-579a27fcce76)
-
-### Audio File Delete Option
-![DeleteAudio](https://github.com/pavan-kumar-arepu/AudioRecorderPavanKumar/assets/13812858/e864ee8e-1664-4fcf-9f66-6db41ffc9b02)
+### Player States
+<img src="https://github.com/pavan-kumar-arepu/AudioRecorderPavanKumar/assets/13812858/2f77d193-2aae-4dbf-ac0f-579a27fcce76" width="30%" />
+<img src="https://github.com/pavan-kumar-arepu/AudioRecorderPavanKumar/assets/13812858/e864ee8e-1664-4fcf-9f66-6db41ffc9b02" width="30%" />
 
 
 ## Sequence Diagrams
