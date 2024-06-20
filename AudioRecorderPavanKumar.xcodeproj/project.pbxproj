@@ -22,6 +22,7 @@
 		0B52C2BE2C1F8288006474C7 /* RenameRecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B52C2BD2C1F8288006474C7 /* RenameRecordingView.swift */; };
 		0B52C2C02C1F8515006474C7 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B52C2BF2C1F8515006474C7 /* Extensions.swift */; };
 		0BF69B542C24A37400935F8A /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 0BF69B532C24A37400935F8A /* README.md */; };
+		0BF69B562C24A5EB00935F8A /* NoRecordingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF69B552C24A5EB00935F8A /* NoRecordingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		0B52C2BD2C1F8288006474C7 /* RenameRecordingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameRecordingView.swift; sourceTree = "<group>"; };
 		0B52C2BF2C1F8515006474C7 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		0BF69B532C24A37400935F8A /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		0BF69B552C24A5EB00935F8A /* NoRecordingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoRecordingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 				0B52C2AF2C1F1AA4006474C7 /* PlayerView.swift */,
 				0B52C2B82C1F79B0006474C7 /* VolumeMeterView.swift */,
 				0B52C2BD2C1F8288006474C7 /* RenameRecordingView.swift */,
+				0BF69B552C24A5EB00935F8A /* NoRecordingsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -219,6 +222,7 @@
 			files = (
 				0B52C2AA2C1F10C8006474C7 /* RecorderViewModel.swift in Sources */,
 				0B52C2B42C1F1FC4006474C7 /* PlayerViewModel.swift in Sources */,
+				0BF69B562C24A5EB00935F8A /* NoRecordingsView.swift in Sources */,
 				0B52C2B22C1F1BF7006474C7 /* RecordingListViewModel.swift in Sources */,
 				0B52C2B72C1F7517006474C7 /* StorageManager.swift in Sources */,
 				0B52C2B92C1F79B0006474C7 /* VolumeMeterView.swift in Sources */,

@@ -25,6 +25,8 @@ struct RenameIndex: Identifiable {
 ///
 /// - Author: Arepu Pavan Kumar
 /// 
+import SwiftUI
+
 struct RecordingsListView: View {
     @StateObject var viewModel = RecordingsListViewModel()
     @State private var showingRecorder = false
@@ -40,43 +42,49 @@ struct RecordingsListView: View {
                     .edgesIgnoringSafeArea(.all)
                 
                 VStack {
-                    List {
-                        ForEach(viewModel.recordings.indices, id: \.self) { index in
-                            let url = viewModel.recordings[index]
-                            NavigationLink(destination: PlayerView(audioURL: url, renameAction: {
-                                renameIndex = index
-                                isRenameViewPresented = true
-                            })) {
-                                VStack(alignment: .leading) {
-                                    Text(url.lastPathComponent)
-                                    Text(self.formatDate(from: url))
-                                        .font(.subheadline)
-                                        .foregroundColor(.gray)
-                                }
-                            }
-                            .contextMenu {
-                                Button(action: {
+                    if viewModel.recordings.isEmpty {
+                        Spacer()
+                        NoRecordingsView()
+                        Spacer()
+                    } else {
+                        List {
+                            ForEach(viewModel.recordings.indices, id: \.self) { index in
+                                let url = viewModel.recordings[index]
+                                NavigationLink(destination: PlayerView(audioURL: url, renameAction: {
                                     renameIndex = index
                                     isRenameViewPresented = true
-                                }) {
-                                    Text("Rename")
-                                    Image(systemName: "pencil")
+                                })) {
+                                    VStack(alignment: .leading) {
+                                        Text(url.lastPathComponent)
+                                        Text(self.formatDate(from: url))
+                                            .font(.subheadline)
+                                            .foregroundColor(.gray)
+                                    }
                                 }
-                                
-                                Button(action: {
-                                    viewModel.deleteRecording(at: index)
-                                }) {
-                                    Text("Delete")
-                                    Image(systemName: "trash")
+                                .contextMenu {
+                                    Button(action: {
+                                        renameIndex = index
+                                        isRenameViewPresented = true
+                                    }) {
+                                        Text("Rename")
+                                        Image(systemName: "pencil")
+                                    }
+                                    
+                                    Button(action: {
+                                        viewModel.deleteRecording(at: index)
+                                    }) {
+                                        Text("Delete")
+                                        Image(systemName: "trash")
+                                    }
                                 }
                             }
+                            .onDelete(perform: deleteRecordings)
                         }
-                        .onDelete(perform: deleteRecordings)
+                        .background(Color.clear) // Background color for table cells
+                        .navigationTitle("Recordings")
+                        .cornerRadius(10) // Optional: Rounded corners for the List
+                        .padding()
                     }
-                    .background(Color.clear) // Background color for table cells
-                    .navigationTitle("Recordings")
-                    .cornerRadius(10) // Optional: Rounded corners for the List
-                    .padding()
                     
                     Button(action: {
                         showingRecorder = true
